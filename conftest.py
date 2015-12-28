@@ -39,9 +39,9 @@ def session_id(mozwebqa):
     print('Current time is: {}'.format(current_time))
     """ Connect to MySQL database """
     conn = MySQLdb.connect(host='localhost',
-                                       user='root',
-                                       passwd='',
-                                       db='amo_sessionIDs')
+                           user='root',
+                           passwd='',
+                           db='amo_sessionIDs')
     # if conn.is_connected():
     #         print('Connected to MySQL database')
 
@@ -54,6 +54,7 @@ def session_id(mozwebqa):
     print('............Successfully created table .......')
     insQuery = """insert into test_session_ids (session_id, date_created) values ('%s', '%s')"""
     # insQuery = """insert into test_session_ids (session_id, date_created) values ('whatever', 'whatever')"""
+    c = conn.cursor()
     c.execute("insert into test_session_ids (session_id, date_created) values (%s, %s)", (str_session_id, current_time))
     # c.execute(insQuery)
     print('............Successfully ADDED to table .......')
