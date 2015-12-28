@@ -26,7 +26,7 @@ def pytest_funcarg__mozwebqa(request):
     pytest_mozwebqa = py.test.config.pluginmanager.getplugin("mozwebqa")
     return pytest_mozwebqa.TestSetup(request)
 
-@pytest.fixture(autouse=True)
+# @pytest.fixture(autouse=True)
 def session_id(mozwebqa):
     print 'Session ID: {}'.format(mozwebqa.selenium.session_id)
     str = '{}\n'.format(mozwebqa.selenium.session_id)
