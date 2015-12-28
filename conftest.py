@@ -42,8 +42,8 @@ def session_id(mozwebqa):
                                        user='root',
                                        passwd='',
                                        db='amo_sessionIDs')
-    if conn.is_connected():
-            print('Connected to MySQL database')
+    # if conn.is_connected():
+    #         print('Connected to MySQL database')
 
     c = conn.cursor()
     tblQuery = """CREATE TABLE IF NOT EXISTS test_session_ids (id int unsigned auto_increment not NULL,
@@ -57,5 +57,5 @@ def session_id(mozwebqa):
     c.execute("insert into test_session_ids (session_id, date_created) values (%s, %s)", (str_session_id, current_time))
     # c.execute(insQuery)
     print('............Successfully ADDED to table .......')
-    conn.commit()
+    # conn.commit()
     conn.close()
