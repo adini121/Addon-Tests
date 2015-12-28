@@ -5,7 +5,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import py
-
+import pytest
 import MySQLdb
 from time import gmtime, strftime
 def pytest_runtest_setup(item):
@@ -26,13 +26,13 @@ def pytest_funcarg__mozwebqa(request):
     pytest_mozwebqa = py.test.config.pluginmanager.getplugin("mozwebqa")
     return pytest_mozwebqa.TestSetup(request)
 
-# @pytest.fixture(autouse=True)
+@pytest.fixture(autouse=True)
 def session_id(mozwebqa):
     print 'Session ID: {}'.format(mozwebqa.selenium.session_id)
     str = '{}\n'.format(mozwebqa.selenium.session_id)
     str_session_id = '{}'.format(mozwebqa.selenium.session_id)
 
-    with open ("/home/adi/python.txt", "a") as myfile:
+    with open ("/home/nisal/python.txt", "a") as myfile:
         myfile.write(str)
 
     current_time = strftime("%Y-%m-%d %H:%M")
