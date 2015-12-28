@@ -21,52 +21,6 @@ class TestExtensions:
 
     @pytest.mark.native
     @pytest.mark.nondestructive
-    def test_pagination(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        featured_extensions_page = home_page.header.site_navigation_menu("Extensions").click()
-        featured_extensions_page.sorter.sort_by('most_users')
-        featured_extensions_page.paginator.click_next_page()
-
-        Assert.contains("&page=2", featured_extensions_page.get_url_current_page())
-
-        featured_extensions_page.paginator.click_prev_page()
-
-        Assert.contains("&page=1", featured_extensions_page.get_url_current_page())
-
-        featured_extensions_page.paginator.click_last_page()
-
-        Assert.true(featured_extensions_page.paginator.is_next_page_disabled)
-
-        featured_extensions_page.paginator.click_first_page()
-
-        Assert.true(featured_extensions_page.paginator.is_prev_page_disabled)
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
-    def test_previous_button_is_disabled_on_the_first_page(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        featured_extensions_page = home_page.header.site_navigation_menu("Extensions").click()
-        featured_extensions_page.sorter.sort_by('Most Users')
-
-        Assert.true(featured_extensions_page.paginator.is_prev_page_disabled)
-
-        featured_extensions_page.paginator.click_next_page()
-        featured_extensions_page.paginator.click_prev_page()
-
-        Assert.true(featured_extensions_page.paginator.is_prev_page_disabled)
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
-    def test_next_button_is_disabled_on_the_last_page(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        featured_extensions_page = home_page.header.site_navigation_menu("Extensions").click()
-        featured_extensions_page.sorter.sort_by('most_users')
-        featured_extensions_page.paginator.click_last_page()
-
-        Assert.true(featured_extensions_page.paginator.is_next_page_disabled, 'Next button is available')
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
     def test_that_checks_if_the_extensions_are_sorted_by_top_rated(self, mozwebqa):
         home_page = Home(mozwebqa)
         featured_extensions_page = home_page.header.site_navigation_menu("Extensions").click()
@@ -84,39 +38,6 @@ class TestExtensions:
         Assert.contains("sort=users", featured_extensions_page.get_url_current_page())
         user_counts = [extension.user_count for extension in featured_extensions_page.extensions]
         Assert.is_sorted_descending(user_counts)
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
-    def test_that_checks_if_the_extensions_are_sorted_by_newest(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        featured_extensions_page = home_page.header.site_navigation_menu("Extensions").click()
-        featured_extensions_page.sorter.sort_by('newest')
-        Assert.equal(featured_extensions_page.sorter.sorted_by, "Newest")
-        Assert.contains("sort=created", featured_extensions_page.get_url_current_page())
-
-        added_dates = [i.added_date for i in featured_extensions_page.extensions]
-        Assert.is_sorted_descending(added_dates)
-        featured_extensions_page.paginator.click_next_page()
-
-        added_dates.extend([i.added_date for i in featured_extensions_page.extensions])
-        Assert.is_sorted_descending(added_dates)
-
-    @pytest.mark.native
-    @pytest.mark.nondestructive
-    def test_that_checks_if_the_extensions_are_sorted_by_recently_updated(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        featured_extensions_page = home_page.header.site_navigation_menu("Extensions").click()
-
-        featured_extensions_page.sorter.sort_by('recently updated')
-        Assert.equal(featured_extensions_page.sorter.sorted_by, "Recently Updated")
-        Assert.contains("sort=updated", featured_extensions_page.get_url_current_page())
-
-        updated_dates = [i.updated_date for i in featured_extensions_page.extensions]
-        Assert.is_sorted_descending(updated_dates)
-        featured_extensions_page.paginator.click_next_page()
-
-        updated_dates.extend([i.updated_date for i in featured_extensions_page.extensions])
-        Assert.is_sorted_descending(updated_dates)
 
     @pytest.mark.native
     @pytest.mark.nondestructive
