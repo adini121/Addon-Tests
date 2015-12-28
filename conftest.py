@@ -39,9 +39,9 @@ def session_id(mozwebqa):
     print('Current time is: {}'.format(current_time))
     """ Connect to MySQL database """
     conn = MySQLdb.connect(host='localhost',
-                                       database='amo_sessionIDs',
                                        user='root',
-                                       password='')
+                                       passwd='',
+                                       db='amo_sessionIDs')
     if conn.is_connected():
             print('Connected to MySQL database')
 
