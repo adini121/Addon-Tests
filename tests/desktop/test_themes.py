@@ -46,17 +46,6 @@ class TestThemes:
     @pytest.mark.native
     @pytest.mark.smoke
     @pytest.mark.nondestructive
-    def test_the_recently_added_section(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        themes_page = home_page.header.site_navigation_menu("Themes").click()
-        Assert.true(themes_page.is_the_current_page)
-        Assert.equal(6, themes_page.recently_added_count)
-        recently_added_dates = themes_page.recently_added_dates
-        Assert.is_sorted_descending(recently_added_dates)
-
-    @pytest.mark.native
-    @pytest.mark.smoke
-    @pytest.mark.nondestructive
     def test_the_most_popular_section(self, mozwebqa):
         home_page = Home(mozwebqa)
         themes_page = home_page.header.site_navigation_menu("Themes").click()
