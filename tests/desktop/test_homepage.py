@@ -62,21 +62,6 @@ class TestHome:
         details_page = home_page.click_on_first_addon()
         Assert.true(details_page.is_the_current_page)
 
-    @pytest.mark.smoke
-    @pytest.mark.nondestructive
-    def test_that_featured_themes_exist_on_the_home(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        Assert.equal(home_page.featured_themes_title, u'Featured Themes See all \xbb', 'Featured Themes region title doesn\'t match')
-        Assert.greater_equal(home_page.featured_themes_count, 6)
-
-    @pytest.mark.nondestructive
-    def test_that_clicking_see_all_themes_link_works(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        featured_theme_page = home_page.click_featured_themes_see_all_link()
-
-        Assert.true(featured_theme_page.is_the_current_page)
-        Assert.equal(featured_theme_page.theme_header, 'Themes')
-
     @pytest.mark.native
     @pytest.mark.nondestructive
     def test_that_extensions_link_loads_extensions_page(self, mozwebqa):
@@ -92,26 +77,12 @@ class TestHome:
         most_popular_items = home_page.most_popular_items
         Assert.is_sorted_descending([i.users_number for i in most_popular_items])
 
-    @pytest.mark.smoke
-    @pytest.mark.nondestructive
-    def test_that_featured_collections_exist_on_the_home(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        Assert.equal(home_page.featured_collections_title, u'Featured Collections See all \xbb', 'Featured Collection region title doesn\'t match')
-        Assert.equal(home_page.featured_collections_count, 4)
-
     @pytest.mark.nondestructive
     def test_that_featured_extensions_exist_on_the_home(self, mozwebqa):
         home_page = Home(mozwebqa)
         Assert.equal(home_page.featured_extensions_title, 'Featured Extensions', 'Featured Extensions region title doesn\'t match')
         Assert.equal(home_page.featured_extensions_see_all, u'See all \xbb', 'Featured Extensions region see all link is not correct')
         Assert.greater(home_page.featured_extensions_count, 1)
-
-    @pytest.mark.nondestructive
-    def test_that_clicking_see_all_collections_link_works(self, mozwebqa):
-        home_page = Home(mozwebqa)
-        featured_collection_page = home_page.click_featured_collections_see_all_link()
-        Assert.true(featured_collection_page.is_the_current_page)
-        Assert.true(featured_collection_page.get_url_current_page().endswith('/collections/?sort=featured'))
 
     @pytest.mark.native
     @pytest.mark.nondestructive
@@ -189,28 +160,6 @@ class TestHome:
                 # first 3 are featured, the others are not
                 [Assert.true(item.is_featured) for item in actual_menu.items[:3]]
                 [Assert.false(item.is_featured) for item in actual_menu.items[3:]]
-
-    @pytest.mark.nondestructive
-    def test_that_checks_the_up_and_coming_extensions_island(self, mozwebqa):
-
-        home_page = Home(mozwebqa)
-
-        up_and_coming_island = home_page.up_and_coming_island
-
-        Assert.equal(up_and_coming_island.title, 'Up & Coming Extensions')
-        Assert.equal(up_and_coming_island.see_all_text, u'See all \xbb')
-
-        for idx in range(up_and_coming_island.pager.dot_count):
-            Assert.equal(idx, up_and_coming_island.visible_section)
-            Assert.equal(idx, up_and_coming_island.pager.selected_dot)
-            Assert.equal(len(up_and_coming_island.addons), 6)
-            up_and_coming_island.pager.next()
-
-        for idx in range(up_and_coming_island.pager.dot_count - 1, -1, -1):
-            Assert.equal(idx, up_and_coming_island.visible_section)
-            Assert.equal(idx, up_and_coming_island.pager.selected_dot)
-            Assert.equal(len(up_and_coming_island.addons), 6)
-            up_and_coming_island.pager.prev()
 
     @pytest.mark.native
     @pytest.mark.nondestructive

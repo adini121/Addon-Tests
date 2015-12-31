@@ -64,26 +64,3 @@ class TestCollections:
         Assert.equal('Collections by %s :: Add-ons for Firefox' % username, home_page.page_title)
         Assert.equal('Collections by %s' % username, my_collections_page.my_collections_header_text)
 
-    @pytest.mark.native
-    @pytest.mark.login
-    def test_user_my_favorites_page(self, mozwebqa):
-
-        home_page = Home(mozwebqa)
-        home_page.login()
-        Assert.true(home_page.is_the_current_page)
-        Assert.true(home_page.header.is_user_logged_in)
-
-        # mark an add-on as favorite if there is none
-        if not home_page.header.is_my_favorites_menu_present:
-            details_page = Details(mozwebqa, 'Firebug')
-            # sometimes the call to is_my_favorites_menu_present lies
-            # and clicking the add to favorites locator when it's already favorited
-            # makes things worse
-            if not details_page.is_addon_marked_as_favorite:
-                details_page.click_add_to_favorites()
-                Assert.true(details_page.is_addon_marked_as_favorite)
-            home_page = Home(mozwebqa)
-
-        my_favorites_page = home_page.header.click_my_favorites()
-        Assert.true(my_favorites_page.is_the_current_page)
-        Assert.equal('My Favorite Add-ons', my_favorites_page.my_favorites_header_text)
